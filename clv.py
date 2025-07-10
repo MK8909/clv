@@ -10,7 +10,7 @@ st.title("🔮 Predict Customer Value Using RFM Features")
 # Load model
 @st.cache_resource
 def load_model():
-    return joblib.load("C:\Users\Windows10\Desktop\first app\clvpredictor\xgb_reg_model.pkl")
+    return joblib.load("C:/Users/Windows10/Desktop/first app/clvpredictor/xgb_reg_model.pkl")
 
 model = load_model()
 
