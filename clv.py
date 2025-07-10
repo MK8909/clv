@@ -22,10 +22,11 @@ st.title("🔮 Predict Customer Value Using RFM Features")
 
 
 
+
+
 def load_model():
-    model_path = Path(__file__).parent / "xgb_reg_model.pkl"
-    with open(model_path, "rb") as f:
-        return pickle.load(f)
+    return joblib.load("xgb_reg_model.pkl")
+
 model=load_model()        
 
 
