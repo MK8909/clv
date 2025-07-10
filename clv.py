@@ -1,36 +1,19 @@
-# app.py
 import streamlit as st
 import pandas as pd
 import joblib
 from datetime import datetime
 
-
-
-import streamlit as st
-import pandas as pd
-import joblib
-import pickle  # ✅ Add this
-from datetime import datetime
-from pathlib import Path  # ✅ Add this
-
-
+# Set page config
 st.set_page_config(page_title="Customer CLV Prediction", layout="centered")
 st.title("🔮 Predict Customer Value Using RFM Features")
 
-# Load model
+# ✅ Load model (no Path, no pickle, just joblib)
 @st.cache_resource
-
-
-
-
 def load_model():
-    import joblib
     return joblib.load("xgb_reg_model.pkl")
 
-
-model=load_model()        
-
-
+# Load once
+model = load_model()
 
 # ---- INPUT FORM ----
 with st.form("input_form"):
@@ -45,7 +28,7 @@ with st.form("input_form"):
 
 if submitted:
     try:
-        # Step 1: Create a single transaction DataFrame
+        # Step 1: Create transaction DataFrame
         df = pd.DataFrame([{
             "customer_id": customer_id,
             "date": pd.to_datetime(date_input),
@@ -54,14 +37,14 @@ if submitted:
         }])
         df["total_price"] = df["quantity"] * df["price"]
 
-        # Step 2: Set reference date (e.g., today or a fixed point)
+        # Step 2: Reference date
         reference_date = pd.to_datetime("1998-01-01")
         recency = (reference_date - df["date"].max()).days
 
-        # Step 3: Compute features matching training format
+        # Step 3: Compute RFM-like features
         rfm_features = pd.DataFrame([{
             "recency": recency,
-            "frequency": 1,  # only 1 transaction
+            "frequency": 1,  # one transaction
             "price_sum": df["total_price"].sum(),
             "price_mean": df["price"].mean()
         }])
@@ -70,9 +53,9 @@ if submitted:
         prediction = model.predict(rfm_features)[0]
 
         st.success(f"🧾 Predicted Customer Value: ₹{prediction:.2f}")
-
         st.subheader("📄 Model Input Features")
         st.write(rfm_features)
 
     except Exception as e:
-        st.error(f"❌ Error: {e}")
+        st.error(f"❌ Error during prediction: {e}")
+
