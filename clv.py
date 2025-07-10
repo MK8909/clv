@@ -23,9 +23,10 @@ st.title("🔮 Predict Customer Value Using RFM Features")
 
 
 
-
 def load_model():
-    return joblib.load("C:/Users/Windows10/Desktop/first app/clvpredictor/xgb_reg_model.pkl")
+    import joblib
+    return joblib.load("xgb_reg_model.pkl")
+
 
 model=load_model()        
 
