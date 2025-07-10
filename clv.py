@@ -4,6 +4,16 @@ import pandas as pd
 import joblib
 from datetime import datetime
 
+
+
+import streamlit as st
+import pandas as pd
+import joblib
+import pickle  # ✅ Add this
+from datetime import datetime
+from pathlib import Path  # ✅ Add this
+
+
 st.set_page_config(page_title="Customer CLV Prediction", layout="centered")
 st.title("🔮 Predict Customer Value Using RFM Features")
 
