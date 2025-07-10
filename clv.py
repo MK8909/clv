@@ -16,7 +16,7 @@ def load_model():
     model_path = Path(__file__).parent / "xgb_reg_model.pkl"
     with open(model_path, "rb") as f:
         return pickle.load(f)
- model=load_model()        
+model=load_model()        
 
 
 
